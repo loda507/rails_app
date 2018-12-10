@@ -1,0 +1,20 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+
+  web:
+    image: hub.docker.com/simonsu99/rails_app:v1.0.0
+    command: rails s -b 0:0:0:0
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    restart: always
+    labels:
+      aliyun.scale: '3'
+      aliyun.routing.port_3000: 'http://rails_app'
